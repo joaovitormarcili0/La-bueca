@@ -28,9 +28,6 @@ const el = {
   newPlayerPosition: document.getElementById('newPlayerPosition'),
 };
 
-const getPlayerWeight = player => player.weight ?? 2;
-
-// Ordena jogadores por posição e nome
 function sortPlayersList() {
   const order = { "Goleiro": 1, "Defesa": 2, "Ataque": 3 };
   players.sort((a, b) =>
@@ -40,7 +37,6 @@ function sortPlayersList() {
   );
 }
 
-// Cria elemento de lista de jogador ou cabeçalho de posição
 function createPlayerListItem(player, idx) {
   if (player.header) {
     const li = document.createElement('li');
@@ -77,7 +73,6 @@ function createPlayerListItem(player, idx) {
   return li;
 }
 
-// Renderiza lista de atletas agrupados por posição
 function renderPlayerList() {
   sortPlayersList();
   el.playerList.innerHTML = '';
@@ -121,64 +116,64 @@ el.addPlayerBtn.onclick = function() {
 
 renderPlayerList();
 
-// Atualiza a lista de atletas
 el.confirmForm.addEventListener('submit', function(e) {
   e.preventDefault();
   renderPlayerList();
 });
 
-// Função de embaralhar array
-const shuffle = arr => {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-};
+// --- NOVA LÓGICA DE SEPARAÇÃO ---
 
-// Divide grupo por soma de força próxima
-function divideByPositionBalanced(arr) {
-  const shuffled = shuffle([...arr]);
-  let teamA = [], teamB = [];
+function balanceTeamsByTotalWeight(presentPlayers) {
+  // Separa por posição
+  const positions = ['Goleiro', 'Defesa', 'Ataque'];
+  const teamA = [], teamB = [];
   let sumA = 0, sumB = 0;
-  shuffled.forEach(p => {
-    const peso = getPlayerWeight(p);
-    if (sumA <= sumB) {
-      teamA.push(p);
-      sumA += peso;
-    } else {
-      teamB.push(p);
-      sumB += peso;
-    }
+
+  positions.forEach(pos => {
+    // Filtra por posição e ordena do mais forte ao mais fraco (aleatoriza pesos iguais)
+    const group = presentPlayers
+      .filter(p => p.position === pos)
+      .sort((a, b) => b.weight - a.weight || (Math.random() - 0.5));
+    // Alterna entre times, sempre colocando o próximo no time com soma menor
+    group.forEach(player => {
+      if (sumA <= sumB) {
+        teamA.push(player);
+        sumA += player.weight;
+      } else {
+        teamB.push(player);
+        sumB += player.weight;
+      }
+    });
   });
+
+  // Garante diferença máxima de 1 atleta entre os times
+  while (Math.abs(teamA.length - teamB.length) > 1) {
+    if (teamA.length > teamB.length) {
+      let p = teamA.pop();
+      teamB.push(p);
+      sumB += p.weight;
+      sumA -= p.weight;
+    } else {
+      let p = teamB.pop();
+      teamA.push(p);
+      sumA += p.weight;
+      sumB -= p.weight;
+    }
+  }
+
   return [teamA, teamB];
 }
 
-// Garante diferença máxima de 1 atleta entre os times
-function balanceTeamSizes(teamWhite, teamBlack) {
-  while (Math.abs(teamWhite.length - teamBlack.length) > 1) {
-    if (teamWhite.length > teamBlack.length) {
-      teamBlack.push(teamWhite.pop());
-    } else {
-      teamWhite.push(teamBlack.pop());
-    }
-  }
-}
-
-// Randomiza times equilibrando por posição, força e quantidade de atletas
+// Evento para randomizar times com equilíbrio geral de força
 el.randomizeBtn.addEventListener('click', function() {
   const presentes = players.filter(p => p.present);
-  const positions = ['Goleiro', 'Defesa', 'Ataque'];
-  let teamWhiteArr = [], teamBlackArr = [];
 
-  positions.forEach(position => {
-    const playersPos = presentes.filter(p => p.position === position);
-    const [a, b] = divideByPositionBalanced(playersPos);
-    teamWhiteArr = teamWhiteArr.concat(a);
-    teamBlackArr = teamBlackArr.concat(b);
-  });
+  if (presentes.length < 2) {
+    alert('Selecione pelo menos 2 atletas!');
+    return;
+  }
 
-  balanceTeamSizes(teamWhiteArr, teamBlackArr);
+  const [teamWhiteArr, teamBlackArr] = balanceTeamsByTotalWeight(presentes);
 
   el.teamWhite.innerHTML = teamWhiteArr.map(p => `<li>${p.name} - ${p.position}</li>`).join('');
   el.teamBlack.innerHTML = teamBlackArr.map(p => `<li>${p.name} - ${p.position}</li>`).join('');
