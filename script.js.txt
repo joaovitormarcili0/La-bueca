@@ -26,10 +26,8 @@ const el = {
   addPlayerBtn: document.getElementById('addPlayerBtn'),
   newPlayerName: document.getElementById('newPlayerName'),
   newPlayerPosition: document.getElementById('newPlayerPosition'),
-  // Removendo elementos de soma de força
 };
 
-// Utilitário para pegar o peso do atleta
 const getPlayerWeight = player => player.weight ?? 2;
 
 // Ordena jogadores por posição e nome
