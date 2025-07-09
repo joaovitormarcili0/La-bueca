@@ -3,7 +3,6 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Arial, sans-serif;
-  /* Degradê azul escuro → azul acinzentado claro, 45 graus */
   background: linear-gradient(125deg, #141b36 0%, #dde3f2 300%);
 }
 
@@ -34,7 +33,6 @@ ul {
   margin-bottom: 12px;
 }
 
-/* Cards dos atletas */
 ul li {
   background: #283566;
   border-radius: 8px;
@@ -48,7 +46,6 @@ ul li {
   font-weight: 500;
 }
 
-/* Cabeçalho das posições: Goleiro, Defesa, Ataque */
 ul li[style*="background: transparent"] {
   background: #FF273D !important;
   color: #fff !important;
@@ -69,7 +66,6 @@ ul li[style*="background: transparent"] {
   box-sizing: border-box;
 }
 
-/* Checkboxes customizados */
 input[type="checkbox"] {
   accent-color: #FF273D;
   width: 22px;
@@ -79,7 +75,6 @@ input[type="checkbox"] {
   border: 2px solid #fff;
 }
 
-/* Efeito visual PSG nos títulos */
 h2::after {
   content: '';
   display: block;
@@ -127,7 +122,6 @@ button[type="submit"]:hover, #randomizeBtn:hover {
   transform: scale(1.04);
 }
 
-/* Formulário de adicionar novo atleta */
 .add-player-form input,
 .add-player-form select {
   border-radius: 6px;
