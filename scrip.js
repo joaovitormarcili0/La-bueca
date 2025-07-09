@@ -1,3 +1,4 @@
+console.log("JS está rodando!");
 let players = [
   { name: "Bruno", position: "Goleiro", present: false, weight: 2 },
   { name: "Flavinho", position: "Goleiro", present: false, weight: 2 },
