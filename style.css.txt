@@ -1,0 +1,164 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  /* Degradê azul escuro → azul acinzentado claro, 45 graus */
+  background: linear-gradient(125deg, #141b36 0%, #dde3f2 300%);
+}
+
+.container {
+  max-width: 520px;
+  margin: 36px auto;
+  background: #222D5B;
+  border-radius: 18px;
+  padding: 30px 24px 18px 24px;
+  box-shadow: 0 6px 18px rgba(15, 18, 36, 0.25);
+  border: 3px solid #fff;
+}
+
+h2, h3 {
+  text-align: center;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+}
+
+form {
+  margin-bottom: 18px;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 12px;
+}
+
+/* Cards dos atletas */
+ul li {
+  background: #283566;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  font-size: 1.07rem;
+  font-weight: 500;
+}
+
+/* Cabeçalho das posições: Goleiro, Defesa, Ataque */
+ul li[style*="background: transparent"] {
+  background: #FF273D !important;
+  color: #fff !important;
+  font-size: 1.14rem;
+  font-weight: bold;
+  margin-top: 22px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  border-left: none;
+  padding-left: 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.11);
+  text-shadow: none;
+  min-width: 100%;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Checkboxes customizados */
+input[type="checkbox"] {
+  accent-color: #FF273D;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 2px solid #fff;
+}
+
+/* Efeito visual PSG nos títulos */
+h2::after {
+  content: '';
+  display: block;
+  margin: 8px auto 0 auto;
+  width: 42px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #fff 40%, #FF273D 60%);
+}
+
+.teams {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.teams div {
+  width: 48%;
+  background: #16204B;
+  border-radius: 12px;
+  padding: 14px 10px;
+  box-shadow: 0 2px 8px rgba(15, 18, 36, 0.12);
+  border: 2px solid #fff;
+}
+
+button[type="submit"], #randomizeBtn {
+  width: 100%;
+  background: #FF273D;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 1.07rem;
+  margin-top: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+  box-shadow: 0 1px 4px rgba(255,39,61,0.07);
+  letter-spacing: 1px;
+}
+
+button[type="submit"]:hover, #randomizeBtn:hover {
+  background: #c8232c;
+  transform: scale(1.04);
+}
+
+/* Formulário de adicionar novo atleta */
+.add-player-form input,
+.add-player-form select {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: #1B233D;
+  color: #fff;
+}
+
+.add-player-form input::placeholder {
+  color: #9fa8bc;
+}
+
+.add-player-form button {
+  background: #FF273D;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.add-player-form button:hover {
+  background: #c8232c;
+}
+
+@media (max-width: 700px) {
+  .container { padding: 16px 4px; }
+  .teams { flex-direction: column; gap: 14px; }
+  .teams div { width: 100%; }
+}
